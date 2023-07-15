@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const sql = require("../database/postgres");
+const sql = require("../../database/postgres");
 
 const register = async (req, res) => {
   try {
@@ -37,19 +37,9 @@ const register = async (req, res) => {
 
     await sql`INSERT INTO users (email, name, password) VALUES (${email}, ${name}, ${hashedPassword});`;
 
-    const user = await sql`SELECT * FROM users WHERE email = ${email}`;
-    const { id } = user[0];
-
-    const token = jwt.sign({ email: email }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "24h",
-    });
-
-    res.json({
-      user: { id, name },
-      token: token,
-    });
-  } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(201).send();
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
 };
 
