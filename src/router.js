@@ -1,5 +1,4 @@
 const Router = require("express");
-
 const authMiddleware = require("./auth/authMiddleware");
 
 const router = Router();
@@ -12,6 +11,9 @@ const createTask = require("./controllers/tasks/createTask");
 const readTask = require("./controllers/tasks/readTask");
 const deleteTask = require("./controllers/tasks/deleteTask");
 const updateTask = require("./controllers/tasks/updateTask");
+const notFound = require("./controllers/notFound");
+
+router.get("/", home);
 
 router.post("/user/register", register);
 
@@ -27,6 +29,6 @@ router.delete("/task/delete", authMiddleware, deleteTask);
 
 router.put("/task/update", authMiddleware, updateTask);
 
-router.get("*", home);
+router.get("*", notFound);
 
 module.exports = router;
