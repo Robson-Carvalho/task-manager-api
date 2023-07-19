@@ -1,11 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
-
-const router = require("./router");
+const port = process.env.PORT || 3030;
 
 const app = express();
-const port = process.env.PORT || 3030;
+
+const router = require("./router");
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
