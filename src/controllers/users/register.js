@@ -39,7 +39,7 @@ const register = async (req, res) => {
 
     res.status(201).send();
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(500).json({ message: "Erro no servidor" });
   }
 };
 

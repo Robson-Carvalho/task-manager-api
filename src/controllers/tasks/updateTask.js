@@ -32,7 +32,7 @@ const updateTask = async (req, res) => {
 
     return res.status(200).send();
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({ message: "Erro no servidor" });
   }
 };
 
