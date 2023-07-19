@@ -4,9 +4,10 @@ const deleteAccount = async (req, res) => {
   try {
     const userID = req.userID;
 
-    await sql`DELETE FROM tasks WHERE id_user = ${userID}`;
-
-    await sql`DELETE FROM users WHERE id = ${userID}`;
+    await sql.begin((sql) => [
+      sql`DELETE FROM tasks WHERE id_user = ${userID}`,
+      sql`DELETE FROM users WHERE id = ${userID}`,
+    ]);
 
     res.status(204).send();
   } catch (error) {
