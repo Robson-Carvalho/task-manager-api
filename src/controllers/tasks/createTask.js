@@ -5,12 +5,6 @@ const createTask = async (req, res) => {
     const { title, content } = req.body;
     const id = req.userID;
 
-    if (!id) {
-      return res.status(400).json({
-        message: "O ID do usuário não foi informado!",
-      });
-    }
-
     if (!title) {
       return res.status(400).json({
         message: "O título da task não foi informado",

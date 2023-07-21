@@ -2,9 +2,9 @@ const sql = require("../../database/postgres");
 
 const updateTask = async (req, res) => {
   try {
-    const { id, title, content, status } = req.body;
+    const { taskID, title, content, status } = req.body;
 
-    if (!id) {
+    if (!taskID) {
       return res.status(400).json({
         message: "O ID da tarefa não foi informado",
       });
@@ -28,7 +28,7 @@ const updateTask = async (req, res) => {
       });
     }
 
-    await sql`UPDATE tasks SET title = ${title}, content = ${content}, status = ${status} WHERE id = ${id};`;
+    await sql`UPDATE tasks SET title = ${title}, content = ${content}, status = ${status} WHERE id = ${taskID};`;
 
     return res.status(200).send();
   } catch (error) {
