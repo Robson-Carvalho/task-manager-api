@@ -15,7 +15,7 @@
   "paths": {
     "/task/create": {
       "post": {
-        "summary": "Cadastro de tarefa",
+        "summary": "Cadastar tarefa",
         "description": "Essa rota será responsável por cadastrar uma nova tarefa",
         "tags": ["Tasks"],
         "security": [{ "bearerAuth": [] }],
@@ -54,7 +54,7 @@
     },
     "/task/read": {
       "get": {
-        "summary": "Busca de tarefa",
+        "summary": "Buscar tarefa",
         "description": "Essa rota é responsável por buscar tarefas pelo ID do usuário",
         "tags": ["Tasks"],
         "security": [{ "bearerAuth": [] }],
