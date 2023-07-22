@@ -39,7 +39,7 @@ Esta documentação descreve o Task Manager API usando o Swagger. O Swagger é u
 
 O swagger fornece recursos para descrever o propósito da API e a sua finalidade. Ela permite que os desenvolvedores acessem e interajam com os dados e serviços da nossa aplicação de uma maneira padronizada.
 
-A documentação da API pode ser acessada em <a href="http://localhost:3030/swagger">link para a documentação online do Swagger</a>.
+A documentação da API pode ser acessada em <a href="https://taskmanager-api.vercel.app/swagger/">link para a documentação online do Swagger</a>.
 
 ## 🔓 Licença
 
