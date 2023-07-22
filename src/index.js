@@ -18,11 +18,14 @@ const corsOptions = {
 
 const app = express();
 
-app.use(express.json());
+app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+app.use(express.static("swagger"));
+
 app.use(cors(corsOptions));
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
 app.use(router);
 
 app.listen(port, () => {
