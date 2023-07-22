@@ -40,7 +40,7 @@ const login = async (req, res) => {
     });
 
     res.status(200).json({
-      user: { name },
+      user: name,
       token: token,
     });
   } catch (error) {
