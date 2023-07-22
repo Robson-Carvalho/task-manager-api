@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/swagger/(.*)",
-      "dest": "src/router.js"
+      "dest": "src/index.js"
     },
 
     {
