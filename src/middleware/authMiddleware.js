@@ -1,17 +1,16 @@
 const jwt = require("jsonwebtoken");
-const secretKey = process.env.JWT_SECRET_KEY;
 
 const authMiddleware = (req, res, next) => {
-  const authorization = req.headers.authorization;
-
-  if (!authorization) {
-    return res.status(401).json({ message: "Token não fornecido" });
-  }
-
-  const [_, token] = authorization.split(" ");
-
   try {
-    const { id } = jwt.verify(token, secretKey);
+    const authorization = req.headers.authorization;
+
+    if (!authorization) {
+      return res.status(401).json({ message: "Token não fornecido" });
+    }
+
+    const [_, token] = authorization.split(" ");
+
+    const { id } = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
     if (!id) {
       return res.status(401).json({ message: "Token não fornecido" });
@@ -21,7 +20,7 @@ const authMiddleware = (req, res, next) => {
 
     next();
   } catch (error) {
-    res.status(401).json({ message: "Token inválido" });
+    res.status(401).json({ message: "Token inválido", error });
   }
 };
 
