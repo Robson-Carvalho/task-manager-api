@@ -1,23 +1,9 @@
 const bcrypt = require("bcrypt");
-const sql = require("../../database/postgres");
+const User = require("../../models/user");
 
 const register = async (req, res) => {
   try {
-    const { email, name, password } = req.body;
-
-    if (!email) {
-      return res.status(400).json({
-        message: "O e-mail não foi informado. Por favor, tente novamente!",
-      });
-    }
-
-    const result = await sql`SELECT * FROM users WHERE email = ${email}`;
-
-    if (Object.keys(result).length) {
-      return res.status(400).json({
-        message: `O e-mail ${email} já está registrado. Por favor, tente novamente!`,
-      });
-    }
+    const { name, email, _password } = req.body;
 
     if (!name) {
       return res.status(400).json({
@@ -25,16 +11,30 @@ const register = async (req, res) => {
       });
     }
 
-    if (!password) {
+    if (!email) {
+      return res.status(400).json({
+        message: "O e-mail não foi informado. Por favor, tente novamente!",
+      });
+    }
+
+    const isThereUser = await User.findOne({ where: { email: email } });
+
+    if (isThereUser) {
+      return res.status(400).json({
+        message: `O e-mail informado não está disponível. Por favor, tente novamente!`,
+      });
+    }
+
+    if (!_password) {
       return res.status(400).json({
         message: "A senha não foi informada. Por favor, tente novamente!",
       });
     }
 
     const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS);
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const password = await bcrypt.hash(_password, saltRounds);
 
-    await sql`INSERT INTO users (email, name, password) VALUES (${email}, ${name}, ${hashedPassword});`;
+    await User.create({ name, email, password });
 
     res.status(201).send();
   } catch (error) {

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const sql = require("../../database/postgres");
+const User = require("../../models/user");
 
 const login = async (req, res) => {
   try {
@@ -18,22 +18,26 @@ const login = async (req, res) => {
         message: "A senha não foi informada. Por favor, tente novamente!",
       });
     }
+    const isThereUser = await User.findOne({ where: { email: email } });
 
-    const result = await sql`SELECT * FROM users WHERE email = ${email}`;
-
-    if (!Object.keys(result).length) {
-      return res
-        .status(400)
-        .json({ message: `Não há usuário cadastrado com o e-mail ${email}` });
+    if (!isThereUser) {
+      return res.status(400).json({
+        message: `E-mail ou senha está incorreto. Por favor, tente novamente!`,
+      });
     }
-    const checkPassword = await bcrypt.compare(password, result[0].password);
+
+    const checkPassword = await bcrypt.compare(
+      password,
+      isThereUser.dataValues.password
+    );
 
     if (!checkPassword) {
       return res.status(422).json({
         message: "Senha inválida!",
       });
     }
-    const { id, name } = result[0];
+
+    const { id, name } = isThereUser.dataValues;
 
     const token = jwt.sign({ id: id }, process.env.JWT_SECRET_KEY, {
       expiresIn: "24h",

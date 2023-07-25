@@ -1,12 +1,16 @@
-const sql = require("../../database/postgres");
+const Task = require("../../models/task");
 
 const readTask = async (req, res) => {
   try {
     const id = req.userID;
 
-    const result = await sql`SELECT * FROM tasks WHERE id_user = ${id}`;
+    const tasks = await Task.findAll({
+      where: {
+        userId: id,
+      },
+    });
 
-    res.status(200).json(result);
+    res.status(200).json({ tasks });
   } catch (error) {
     res.status(500).json({ message: "Erro no servidor" });
   }

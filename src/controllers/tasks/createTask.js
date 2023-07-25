@@ -1,4 +1,4 @@
-const sql = require("../../database/postgres");
+const Task = require("../../models/task");
 
 const createTask = async (req, res) => {
   try {
@@ -17,7 +17,7 @@ const createTask = async (req, res) => {
       });
     }
 
-    await sql`INSERT INTO tasks (id_user, title, content, status, created_at) VALUES (${id}, ${title}, ${content}, ${false}, NOW());`;
+    await Task.create({ userId: id, title, content });
 
     res.status(201).send();
   } catch (error) {

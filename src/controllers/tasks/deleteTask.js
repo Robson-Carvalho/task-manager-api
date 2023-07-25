@@ -1,4 +1,4 @@
-const sql = require("../../database/postgres");
+const Task = require("../../models/task");
 
 const deleteTask = async (req, res) => {
   try {
@@ -10,7 +10,11 @@ const deleteTask = async (req, res) => {
       });
     }
 
-    await sql`DELETE FROM tasks WHERE id = ${taskID}`;
+    Task.destroy({
+      where: {
+        id: taskID,
+      },
+    });
 
     res.status(204).send();
   } catch (error) {

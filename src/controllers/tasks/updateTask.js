@@ -1,4 +1,4 @@
-const sql = require("../../database/postgres");
+const Task = require("../../models/task");
 
 const updateTask = async (req, res) => {
   try {
@@ -28,7 +28,14 @@ const updateTask = async (req, res) => {
       });
     }
 
-    await sql`UPDATE tasks SET title = ${title}, content = ${content}, status = ${status} WHERE id = ${taskID};`;
+    await Task.update(
+      { title: title, content: content, status: status },
+      {
+        where: {
+          id: taskID,
+        },
+      }
+    );
 
     return res.status(200).send();
   } catch (error) {
