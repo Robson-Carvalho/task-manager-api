@@ -31,7 +31,7 @@ Execute o comando abaixo para rodar o projeto.
 npm run dev
 ```
 
-🚀 Acesse o <a href="http://localhost:3030/">projeto</a>.
+🚀 Acesse o <a href="http://localhost:3030/" target="_blank">projeto</a>.
 
 ## 📄 Documentação
 
